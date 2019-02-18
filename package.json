@@ -27,6 +27,7 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "amazon-mws": "0.0.23",
     "async": "^2.6.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.1",
@@ -50,7 +51,8 @@
     "pug": "^2.0.0-rc.4",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "xml-js": "^1.6.9"
   },
   "devDependencies": {
     "@types/async": "^2.0.45",

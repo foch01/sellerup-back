@@ -24,6 +24,7 @@ import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
+import * as MWSController from "./controllers/MWS";
 
 
 // API keys and Passport configuration
@@ -31,7 +32,6 @@ import * as passportConfig from "./config/passport";
 
 // Create Express server
 const app = express();
-
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
 (<any>mongoose).Promise = bluebird;
@@ -115,6 +115,9 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+/***** MWS *****/
+app.get("/mws", MWSController.MWS.getAllOrders);
 
 /**
  * API examples routes.
