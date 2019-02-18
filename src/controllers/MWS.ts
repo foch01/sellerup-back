@@ -1,38 +1,31 @@
 import MwsApi from "amazon-mws";
+import { BuildRequestMWSUtils } from "../util/mws/BuildRequestMWSUtils";
+import { confMWSHost, confShortNameCountry } from "../constants/ConfMWSConstant";
+import { Request, Response } from "express";
+const moment = require("moment");
 
 export class MWS {
-    static getAllOrders = async () => {
-        const accessKey = "AKIAILXI57P5Z5NHUGKA";
-        const accessSecret = "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";
-        const amazonMws = new MwsApi();
-        amazonMws.setApiKey(accessKey, accessSecret);
-        // console.log("CONNEXION", amazonMws);
+    static getAllOrders = async (req: Request, res: Response) => {
         try {
-            const response: any =  await amazonMws.orders.search({
-                "Version": "2013-09-01",
-                "Action": "ListOrders",
-                "SellerId": "ANVTZP44ZDKG6",
-                "MWSAuthToken": "amzn.mws.7ab39b95-14db-4973-d640-2bac2057d662",
-                "MarketplaceId.Id.1": "A13V1IB3VIYZZH",
-                "LastUpdatedAfter": new Date(2019, 2, 16)
+            /*-------- REQUIS POUR LA REQUETE -----*/
+            const accessKey = process.env.AWS_ACCESS_KEY_ID;
+            const accessSecret = process.env.SECRET_KEY;
+            const amazonMws = new MwsApi();
+            amazonMws.setHost(confMWSHost.HOST_FR);
+            amazonMws.setApiKey(accessKey, accessSecret);
+            const date = moment("2019-01-17").format("YYYY-MM-DD");
+            /*------- END -------*/
+            const marketPlaces = [
+                confShortNameCountry.FR
+            ];
+            const buildRequestGetAllOrdersMWS = await BuildRequestMWSUtils.getAllOrders(date, marketPlaces);
+            const getAllOrders = await amazonMws.orders.search(buildRequestGetAllOrdersMWS);
+            console.log("response", JSON.stringify(getAllOrders, undefined, 4));
+            res.render("home", {
+                title: "Home"
             });
-            console.log("response", response);
         } catch (e) {
             console.log("error", e);
         }
-/*        await amazonMws.orders.search({
-            "Version": "2013-09-01",
-            "Action": "ListOrders",
-            "SellerId": "ANVTZP44ZDKG6",
-            "MWSAuthToken": "amzn.mws.7ab39b95-14db-4973-d640-2bac2057d662",
-            "MarketplaceId.Id.1": "A13V1IB3VIYZZH",
-            "LastUpdatedAfter": new Date(2019, 2, 16)
-        }).then(
-            data => { // resolve()
-                console.log("Process 1:", data);
-            },
-            error => { // reject()
-                console.log(error);
-            });*/
-    }
+    };
 }
