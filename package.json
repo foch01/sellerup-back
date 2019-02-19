@@ -28,6 +28,7 @@
     "fake-data": "node dist/fake-data/FakeEmailSeeders.js"
   },
   "dependencies": {
+    "amazon-mws": "0.0.23",
     "async": "^2.6.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.1",
@@ -43,6 +44,7 @@
     "fbgraph": "^1.4.1",
     "lodash": "^4.17.5",
     "lusca": "^1.5.2",
+    "moment": "^2.24.0",
     "mongoose": "^4.13.11",
     "mongoose-dummy": "^1.0.8",
     "nodemailer": "^4.4.1",
@@ -52,7 +54,8 @@
     "pug": "^2.0.0-rc.4",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "xml-js": "^1.6.9"
   },
   "devDependencies": {
     "@types/async": "^2.0.45",
