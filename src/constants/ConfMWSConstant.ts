@@ -14,7 +14,7 @@ export const confShortNameCountry = {
     ES: "ES"
 };
 
-export const OrderStatus = {
+export const confOrderStatus = {
     PENDING_AVAILABILITY: "PENDING_AVAILABILITY",
     PENDING: "PENDING",
     UNSHIPPED: "UNSHIPPED",

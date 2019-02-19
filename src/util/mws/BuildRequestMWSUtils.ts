@@ -18,20 +18,16 @@ export class BuildRequestMWSUtils {
             marketplaces.forEach((marketplace: string) => {
                 if (marketplace === confShortNameCountry.FR) {
                     build[0][`MarketplaceId.Id.${i}`] = process.env.MARKETPLACE_ID_FR;
-                    i++;
                 } else if (marketplace === confShortNameCountry.DE) {
                     build[0][`MarketplaceId.Id.${i}`] = process.env.MARKETPLACE_ID_DE;
-                    i++;
                 } else if (marketplace === confShortNameCountry.IT) {
                     build[0][`MarketplaceId.Id.${i}`] = process.env.MARKETPLACE_ID_IT;
-                    i++;
                 } else if (marketplace === confShortNameCountry.UK) {
                     build[0][`MarketplaceId.Id.${i}`] = process.env.MARKETPLACE_ID_UK;
-                    i++;
                 } else if (marketplace === confShortNameCountry.ES) {
                     build[0][`MarketplaceId.Id.${i}`] = process.env.MARKETPLACE_ID_ES;
-                    i++;
                 }
+                i++;
             });
             return build[0];
         } catch (e) {
