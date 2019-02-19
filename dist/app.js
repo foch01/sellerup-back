@@ -32,6 +32,7 @@ const homeController = __importStar(require("./controllers/home"));
 const userController = __importStar(require("./controllers/user"));
 const apiController = __importStar(require("./controllers/api"));
 const contactController = __importStar(require("./controllers/contact"));
+const MWSController = __importStar(require("./controllers/MWS"));
 // API keys and Passport configuration
 const passportConfig = __importStar(require("./config/passport"));
 // Create Express server
@@ -113,6 +114,8 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
+/***** MWS *****/
+app.get("/mws", MWSController.MWS.getAllOrders);
 /**
  * API examples routes.
  */
