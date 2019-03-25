@@ -1,6 +1,7 @@
 import errorHandler from "errorhandler";
 
 import app from "./app";
+import { LogUtil } from "./util/LogUtil";
 
 const displayRoutes = require("express-routemap");
 
