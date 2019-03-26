@@ -1,14 +1,13 @@
 import { EmailGroupModelDb, EmailGroupModelType } from "../models/EmailGroupModel";
 import { MONGODB_URI } from "../util/secrets";
-import bluebird from "bluebird";
 import { EmailModelDb, EmailModelType } from "../models/EmailModel";
+import { OrderModelDb, OrderModelType } from "../models/Order.model";
 const mongoose = require("mongoose");
 const dummy = require("mongoose-dummy");
 
 // CONNECT TO DB
 
 const mongoUrl = MONGODB_URI;
-(<any>mongoose).Promise = bluebird;
 const options: any = {
     useMongoClient: true,
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
@@ -36,6 +35,20 @@ while (i < 20) {
             console.log(error);
         });
     i++;
+}
+
+let toto = 0;
+while (toto < 20) {
+    const randomOrder = dummy(OrderModelDb);
+    const orderDb: OrderModelType = new OrderModelDb(randomOrder);
+    orderDb.save().then(
+        data => { // resolve()
+            console.log("Process 1:", data);
+        },
+        error => { // reject()
+            console.log(error);
+        });
+    toto++;
 }
 
 let j = 0;

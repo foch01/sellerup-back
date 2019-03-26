@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import compression from "compression";  // compresses requests
 import session from "express-session";
 import bodyParser from "body-parser";
@@ -11,7 +11,6 @@ import path from "path";
 import mongoose from "mongoose";
 import passport from "passport";
 import expressValidator from "express-validator";
-import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 import router from "./routes";
@@ -23,13 +22,13 @@ dotenv.config({path: ".env"});
 
 // API keys and Passport configuration
 import * as passportConfig from "./config/passport";
+import { AssertionError } from "assert";
 
 // Create Express server
 const app = express();
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
-(<any>mongoose).Promise = bluebird;
 const options: any = {
     useMongoClient: true,
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
@@ -92,5 +91,8 @@ app.use(
 
 app.use("/api", router);
 // app.get("/account", passportConfig.isAuthenticated, userController.getAccount);
+
+import { attachErrorHandlers } from "./util/errorHandler";
+attachErrorHandlers(app);
 
 export default app;
