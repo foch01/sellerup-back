@@ -2,6 +2,7 @@ import { EmailGroupModelDb, EmailGroupModelType } from "../models/EmailGroupMode
 import { MONGODB_URI } from "../util/secrets";
 import { EmailModelDb, EmailModelType } from "../models/EmailModel";
 import { OrderModelDb, OrderModelType } from "../models/Order.model";
+import { ProductModelDb, ProductModelType } from "../models/Product.model";
 const mongoose = require("mongoose");
 const dummy = require("mongoose-dummy");
 
@@ -49,6 +50,20 @@ while (toto < 20) {
             console.log(error);
         });
     toto++;
+}
+// Génération fake product
+let k = 0;
+while (k < 20) {
+    const randomProduct = dummy(ProductModelDb);
+    const productDb: ProductModelType = new ProductModelDb(randomProduct);
+    productDb.save().then(
+        data => { // resolve()
+            console.log("Process 1:", data);
+        },
+        error => { // reject()
+            console.log(error);
+        });
+    k++;
 }
 
 let j = 0;
