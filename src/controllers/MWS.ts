@@ -13,11 +13,11 @@ export class MWS {
             const amazonMws = new MwsApi();
             amazonMws.setHost(confMWSHost.HOST_FR);
             amazonMws.setApiKey(accessKey, accessSecret);
-            const date = moment("2019-01-17").format("YYYY-MM-DD");
-            /*------- END -------*/
             const marketPlaces = [
                 confShortNameCountry.FR
             ];
+            /*------- END -------*/
+            const date = moment("2019-01-17").format("YYYY-MM-DD");
             const buildRequestGetAllOrdersMWS = await BuildRequestMWSUtils.getAllOrders(date, marketPlaces);
             const getAllOrders = await amazonMws.orders.search(buildRequestGetAllOrdersMWS);
             console.log("response", JSON.stringify(getAllOrders, undefined, 4));
