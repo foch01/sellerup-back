@@ -1,0 +1,6 @@
+.circleci
+.vscode
+.env.dist
+node_modules
+test
+dist
