@@ -1,7 +1,7 @@
 import { model, Model, Schema, Document } from "mongoose";
 
 export type CityModelType = Document & {
-    name: string,
+    name: string;
 };
 
 const CityModelSchema = new Schema({

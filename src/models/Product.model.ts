@@ -1,15 +1,15 @@
-import { Document, model, Model, Schema, SchemaTypes } from "mongoose";
-import { EmailGroupModelType } from "./EmailGroupModel";
+import { Document, model, Model, Schema } from "mongoose";
+import { EmailGroupModelType } from "@models/EmailGroupModel";
 
 export type ProductModelType = Document & {
-    title: string,
-    price: Number,
-    imageURL: string,
-    marketplace: string,
-    ASIN: string,
-    SKU: string,
-    numberSell: number,
-    numberUnitsInStock: number
+    title: string;
+    price: number;
+    imageURL: string;
+    marketplace: string;
+    ASIN: string;
+    SKU: string;
+    numberSell: number;
+    numberUnitsInStock: number;
 };
 
 export const ProductModelSchema = new Schema({
@@ -28,12 +28,12 @@ export const ProductModelSchema = new Schema({
     });
 
 // Getter
-ProductModelSchema.path("price").get(function(num: any) {
+ProductModelSchema.path("price").get(function(num: number) {
     return (num / 100).toFixed(2);
 });
 
 // Setter
-ProductModelSchema.path("price").set(function(num: any) {
+ProductModelSchema.path("price").set(function(num: number) {
     return num * 100;
 });
 

@@ -1,18 +1,18 @@
 import { model, Model, Schema, Document, SchemaTypes } from "mongoose";
-import { ZipCodeModelType } from "./ZipCode.model";
-import { CityModelType } from "./City.model";
+import { ZipCodeModelType } from "@models/ZipCode.model";
+import { CityModelType } from "@models/City.model";
 
 export type OrderAddressModelType = Document & {
-    name: string,
-    addressLine1: string,
-    addressLine2: string,
-    addressLine3: string,
-    city: CityModelType,
-    county: string,
-    district: string,
-    stateOrRegion: string,
-    zipCode: ZipCodeModelType,
-    countryCode: string,
+    name: string;
+    addressLine1: string;
+    addressLine2: string;
+    addressLine3: string;
+    city: CityModelType;
+    county: string;
+    district: string;
+    stateOrRegion: string;
+    zipCode: ZipCodeModelType;
+    countryCode: string;
 };
 
 const OrderAddressModelSchema = new Schema({

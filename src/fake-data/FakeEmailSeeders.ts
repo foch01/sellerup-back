@@ -1,15 +1,16 @@
 import { EmailGroupModelDb, EmailGroupModelType } from "../models/EmailGroupModel";
-import { MONGODB_URI } from "../util/secrets";
+import { MONGODB_URI } from "@utils/secrets";
 import { EmailModelDb, EmailModelType } from "../models/EmailModel";
 import { OrderModelDb, OrderModelType } from "../models/Order.model";
 import { ProductModelDb, ProductModelType } from "../models/Product.model";
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const dummy = require("mongoose-dummy");
 
 // CONNECT TO DB
 
 const mongoUrl = MONGODB_URI;
-const options: any = {
+const options: mongoose.ConnectionOptions = {
     useMongoClient: true,
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
     reconnectInterval: 500, // Reconnect every 500ms
@@ -19,6 +20,7 @@ const options: any = {
 mongoose.connect(mongoUrl, options).then(
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
     },
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ).catch(function (err: any) {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     // process.exit();

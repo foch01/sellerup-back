@@ -1,15 +1,16 @@
+import "module-alias/register";
 import errorHandler from "errorhandler";
 
 import app from "./app";
-import { LogUtil } from "./util/LogUtil";
+// import { LogUtil } from "@utils/LogUtil";
 
-const displayRoutes = require("express-routemap");
-
+import displayRoutes from "express-routemap";
 
 /**
  * Error Handler. Provides full stack - remove for production
  */
 app.use(errorHandler());
+
 
 /**
  * Start Express server.

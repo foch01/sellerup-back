@@ -1,30 +1,30 @@
 import { model, Model, Schema, Document, SchemaTypes } from "mongoose";
-import { OrderAddressModelType } from "./OrderAddress.model";
+import { OrderAddressModelType } from "@models/OrderAddress.model";
 
 export type OrderModelType = Document & {
-    amazonOrderId: string,
-    sellerOrderId: string,
-    purchaseDate: Date,
-    lastUpdateDate: Date,
-    orderStatus: string,
-    fulfillmentChannel: string,
-    salesChannel: string,
-    orderChannel: string,
-    shipServiceLevel: string,
-    shippingAddress: OrderAddressModelType,
-    orderTotal: string,
-    numberOfItemsShipped: number,
-    numberOfItemsUnshipped: number,
-    isReplacementOrder: boolean,
-    replacedOrderId: string,
-    marketplaceId: string,
-    buyerEmail: string,
-    buyerName: string,
-    shipmentServiceLevelCategory: string,
-    isBusinessOrder: boolean,
-    purchaseOrderNumber: string,
-    isPrime: boolean,
-    isPremiumOrder: boolean,
+    amazonOrderId: string;
+    sellerOrderId: string;
+    purchaseDate: Date;
+    lastUpdateDate: Date;
+    orderStatus: string;
+    fulfillmentChannel: string;
+    salesChannel: string;
+    orderChannel: string;
+    shipServiceLevel: string;
+    shippingAddress: OrderAddressModelType;
+    orderTotal: string;
+    numberOfItemsShipped: number;
+    numberOfItemsUnshipped: number;
+    isReplacementOrder: boolean;
+    replacedOrderId: string;
+    marketplaceId: string;
+    buyerEmail: string;
+    buyerName: string;
+    shipmentServiceLevelCategory: string;
+    isBusinessOrder: boolean;
+    purchaseOrderNumber: string;
+    isPrime: boolean;
+    isPremiumOrder: boolean;
 };
 
 const OrderModelSchema = new Schema({

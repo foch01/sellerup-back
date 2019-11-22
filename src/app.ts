@@ -1,44 +1,47 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import compression from "compression";  // compresses requests
 import session from "express-session";
 import bodyParser from "body-parser";
-import logger from "./util/logger";
 import lusca from "lusca";
-import dotenv from "dotenv";
 import mongo from "connect-mongo";
 import flash from "express-flash";
 import path from "path";
 import mongoose from "mongoose";
 import passport from "passport";
-import expressValidator from "express-validator";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
-
+import bluebird from "bluebird";
+import { MONGODB_URI, SESSION_SECRET } from "@utils/secrets";
 import router from "./routes";
 
 const MongoStore = mongo(session);
 
-// Load environment variables from .env file, where API keys and passwords are configured
-dotenv.config({path: ".env"});
+// Controllers (route handlers)
+import * as apiController from "@controllers/api";
 
 // API keys and Passport configuration
-import * as passportConfig from "./config/passport";
-import { AssertionError } from "assert";
+// import * as passportConfig from "./config/passport";
 
 // Create Express server
 const app = express();
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
-const options: any = {
-    useMongoClient: true,
+mongoose.Promise = bluebird;
+
+const options: mongoose.ConnectionOptions = {
+    autoCreate: true,
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
     reconnectInterval: 500, // Reconnect every 500ms
     poolSize: 10,
     bufferMaxEntries: 0,
+    useNewUrlParser: true, 
+    useCreateIndex: true, 
+    useUnifiedTopology: true,
 };
+
+console.log(mongoUrl);
+
 mongoose.connect(mongoUrl, options).then(
-    () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
-    },
+    () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
 ).catch(err => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     // process.exit();
@@ -50,8 +53,7 @@ app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 app.use(compression());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(expressValidator());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     resave: true,
     saveUninitialized: true,
@@ -70,29 +72,21 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
-app.use((req, res, next) => {
-    // After successful login, redirect back to the intended page
-    if (!req.user &&
-        req.path !== "/login" &&
-        req.path !== "/signup" &&
-        !req.path.match(/^\/auth/) &&
-        !req.path.match(/\./)) {
-        req.session.returnTo = req.path;
-    } else if (req.user &&
-        req.path == "/account") {
-        req.session.returnTo = req.path;
-    }
-    next();
-});
 
 app.use(
-    express.static(path.join(__dirname, "public"), {maxAge: 31557600000})
+    express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+/**
+ * API examples routes.
+ */
+app.get(["/","/api"], apiController.getApi);
 app.use("/api", router);
-// app.get("/account", passportConfig.isAuthenticated, userController.getAccount);
 
-import { attachErrorHandlers } from "./util/errorHandler";
+/**
+ * Attach error handler
+ */
+import attachErrorHandlers from "@utils/errorHandler";
 attachErrorHandlers(app);
 
 export default app;

@@ -1,7 +1,7 @@
 import { model, Model, Schema, Document } from "mongoose";
 
 export type ZipCodeModelType = Document & {
-    code: string,
+    code: string;
 };
 
 const ZipCodeModelSchema = new Schema({

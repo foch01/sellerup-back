@@ -1,8 +1,8 @@
-import { Document, model, Model, Schema, SchemaTypes } from "mongoose";
-import { EmailModelType } from "./EmailModel";
+import { Document, model, Model, Schema } from "mongoose";
+import { EmailModelType } from "@models/EmailModel";
 
 export type EmailGroupModelType = Document & {
-    name: string
+    name: string;
 };
 
 export const EmailGroupModelSchema = new Schema({

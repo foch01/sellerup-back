@@ -3,31 +3,32 @@ import crypto from "crypto";
 import mongoose from "mongoose";
 
 export type UserModel = mongoose.Document & {
-  email: string,
-  password: string,
-  passwordResetToken: string,
-  passwordResetExpires: Date,
+  email: string;
+  password: string;
+  passwordResetToken: string;
+  passwordResetExpires: Date;
 
-  facebook: string,
-  tokens: AuthToken[],
+  facebook: string;
+  tokens: AuthToken[];
 
   profile: {
-    name: string,
-    gender: string,
-    location: string,
-    website: string,
-    picture: string
-  },
+    name: string;
+    gender: string;
+    location: string;
+    website: string;
+    picture: string;
+  };
 
-  comparePassword: comparePasswordFunction,
-  gravatar: (size: number) => string
+  comparePassword: comparePasswordFunction;
+  gravatar: (size: number) => string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void;
 
 export type AuthToken = {
-  accessToken: string,
-  kind: string
+  accessToken: string;
+  kind: string;
 };
 
 const userSchema = new mongoose.Schema({
@@ -49,22 +50,6 @@ const userSchema = new mongoose.Schema({
     picture: String
   }
 }, { timestamps: true });
-
-/**
- * Password hash middleware.
- */
-userSchema.pre("save", function save(next) {
-  const user = this;
-  if (!user.isModified("password")) { return next(); }
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, undefined, (err: mongoose.Error, hash) => {
-      if (err) { return next(err); }
-      user.password = hash;
-      next();
-    });
-  });
-});
 
 const comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {

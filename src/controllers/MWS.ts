@@ -1,8 +1,8 @@
 import MwsApi from "amazon-mws";
-import { BuildRequestMWSUtils } from "../util/mws/BuildRequestMWSUtils";
+import { BuildRequestMWSUtils } from "@utils/mws/BuildRequestMWSUtils";
 import { confMWSHost, confShortNameCountry } from "../constants/ConfMWSConstant";
 import { Request, Response } from "express";
-const moment = require("moment");
+import moment from "moment";
 
 export class MWS {
     static getAllOrders = async (req: Request, res: Response) => {

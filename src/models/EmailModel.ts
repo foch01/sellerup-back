@@ -1,18 +1,18 @@
 import { model, Model, Schema, SchemaTypes, Document } from "mongoose";
-import { EmailGroupModelType } from "./EmailGroupModel";
+import { EmailGroupModelType } from "@models/EmailGroupModel";
 
 export type EmailModelType = Document & {
-    title: string,
-    subject: string,
-    content: string,
-    joinInvoice: boolean,
-    channelSelling: string,
-    dateTimeAfterOrderStatus: string,
-    productReturn: boolean,
-    negativeReview: boolean,
-    sendAllProductAllTheShop: boolean,
-    listMultipleProductASIN: string[]
-    emailGroup: EmailGroupModelType[]
+    title: string;
+    subject: string;
+    content: string;
+    joinInvoice: boolean;
+    channelSelling: string;
+    dateTimeAfterOrderStatus: string;
+    productReturn: boolean;
+    negativeReview: boolean;
+    sendAllProductAllTheShop: boolean;
+    listMultipleProductASIN: string[];
+    emailGroup: EmailGroupModelType[];
 };
 
 export const EmailModelSchema = new Schema({
