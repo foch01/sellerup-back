@@ -36,9 +36,8 @@ const options: mongoose.ConnectionOptions = {
     useNewUrlParser: true, 
     useCreateIndex: true, 
     useUnifiedTopology: true,
+    useFindAndModify: true,
 };
-
-console.log(mongoUrl);
 
 mongoose.connect(mongoUrl, options).then(
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
