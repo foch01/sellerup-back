@@ -41,3 +41,6 @@ debug.log
 
 package-lock.json
 
+data/
+config/cert
+
