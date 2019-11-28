@@ -10,15 +10,14 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "@utils/secrets";
+
 import router from "./routes";
 
 const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as apiController from "@controllers/api";
-
-// API keys and Passport configuration
-// import * as passportConfig from "./config/passport";
+import {postLogin} from "@controllers/user.controller";
 
 // Create Express server
 const app = express();
@@ -63,14 +62,14 @@ app.use(session({
     })
 }));
 app.use(passport.initialize());
-app.use(passport.session());
+import setPassportStrategies from "./config/passport";
+setPassportStrategies(passport);
+
+
+// app.use(passport.session());
 app.use(flash());
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
-app.use((req, res, next) => {
-    res.locals.user = req.user;
-    next();
-});
 
 app.use(
     express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
@@ -80,7 +79,8 @@ app.use(
  * API examples routes.
  */
 app.get(["/","/api"], apiController.getApi);
-app.use("/api", router);
+app.post("/login", postLogin);
+app.use("/api/", passport.authenticate("jwt", { session: false }), router );
 
 /**
  * Attach error handler

@@ -1,81 +1,32 @@
-// import passport from "passport";
-// import passportLocal from "passport-local";
-// import _ from "lodash";
+import * as path from "path";
+import * as JwtStrategy from "passport-jwt";
+import {readFileSync} from "fs";
+import { PassportStatic } from "passport";
+import { UserModelDb } from "@models/User.model";
+import { BadCredentialsError } from "@type/custom-errors";
 
-// // import { User, UserType } from '../models/User';
-// import { User, UserDocument } from "@models/User";
-// import { Request, Response, NextFunction } from "express";
+const {env} = process;
+const PUBLIC_KEY_PATH = env.PUBLIC_KEY || "config/cert/public.pem";
+const publicKey = readFileSync(path.resolve(process.cwd(), PUBLIC_KEY_PATH), "utf-8");
 
-// const LocalStrategy = passportLocal.Strategy;
+const opts: JwtStrategy.StrategyOptions = {
+    jwtFromRequest : JwtStrategy.ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey : publicKey,
+    algorithms: ["RS256"],
+};
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// passport.serializeUser<any, any>((user, done) => {
-//     done(undefined, user.id);
-// });
+const verifyFunction: JwtStrategy.VerifiedCallback = async (payload, done) => {
+    const user = await UserModelDb.findById(payload.id);
+    
+    if(user) {
+        return done(null, user);
+    } else {
+        return done(new BadCredentialsError());
+    }
+};
 
-// passport.deserializeUser((id, done) => {
-//     User.findById(id, (err, user) => {
-//         done(err, user);
-//     });
-// });
+function setPassportStrategies(passport: PassportStatic) {
+    passport.use(new JwtStrategy.Strategy(opts, verifyFunction));
+}
 
-
-// /**
-//  * Sign in using Email and Password.
-//  */
-// passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//     User.findOne({ email: email.toLowerCase() }, (err, user: any) => {
-//         if (err) { return done(err); }
-//         if (!user) {
-//             return done(undefined, false, { message: `Email ${email} not found.` });
-//         }
-//         user.comparePassword(password, (err: Error, isMatch: boolean) => {
-//             if (err) { return done(err); }
-//             if (isMatch) {
-//                 return done(undefined, user);
-//             }
-//             return done(undefined, false, { message: "Invalid email or password." });
-//         });
-//     });
-// }));
-
-
-// /**
-//  * OAuth Strategy Overview
-//  *
-//  * - User is already logged in.
-//  *   - Check if there is an existing account with a provider id.
-//  *     - If there is, return an error message. (Account merging not supported)
-//  *     - Else link new OAuth account with currently logged-in user.
-//  * - User is not logged in.
-//  *   - Check if it's a returning user.
-//  *     - If returning user, sign in and we are done.
-//  *     - Else check if there is an existing account with user's email.
-//  *       - If there is, return an error message.
-//  *       - Else create a new account.
-//  */
-
-// /**
-//  * Login Required middleware.
-//  */
-// export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-//     if (req.isAuthenticated()) {
-//         return next();
-//     }
-//     res.redirect("/login");
-// };
-
-// /**
-//  * Authorization Required middleware.
-//  */
-// export const isAuthorized = (req: Request, res: Response, next: NextFunction) => {
-//     const provider = req.path.split("/").slice(-1)[0];
-
-//     const user = req.user as UserDocument;
-//     if (_.find(user.tokens, { kind: provider })) {
-//         next();
-//     } else {
-//         res.redirect(`/auth/${provider}`);
-//     }
-// };
+export default setPassportStrategies;

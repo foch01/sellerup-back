@@ -6,7 +6,7 @@ export class BadCredentialsError extends Error {
         const message = "Bad credentials";
         super(message);
         this.status = 400;
-        this.level = 'info'
+        this.level = "info";
         this.message = message;
     }
   }
