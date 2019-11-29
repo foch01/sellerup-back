@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "@utils/asyncHandler";
 import {UserModelDb, UserModelType} from "@models/User.model";
-import { BadCredentialsError } from "../types/custom-errors";
+import { BadCredentialsError } from "@type/custom-errors";
 
 /**
  * Create user account

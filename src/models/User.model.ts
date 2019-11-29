@@ -1,5 +1,4 @@
-import bcrypt from "bcryptjs";
-import { Document, model, Model, Schema, Error } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 
 import {hash, compare} from "bcryptjs";
 import * as jwt from "jsonwebtoken";
@@ -9,10 +8,8 @@ import * as path from "path";
 const {env} = process;
 const KEY_PASSPHRASE = env.KEY_PASSPHRASE;
 const PRIVATE_KEY_PATH = env.PRIVATE_KEY || "config/cert/private.pem";
-const PUBLIC_KEY_PATH = env.PUBLIC_KEY || "config/cert/public.pem";
 const cwd = process.cwd();
 const privateKey = readFileSync(path.resolve(cwd, PRIVATE_KEY_PATH), "utf-8");
-const publicKey = readFileSync(path.resolve(cwd, PUBLIC_KEY_PATH), "utf-8");
 
 const userModelSchema = new Schema({
   email: { type: String, unique: true },
