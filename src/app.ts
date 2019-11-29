@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "@utils/secrets";
-
+import { swaggerConfiguration } from "./swagger/conf";
 import router from "./routes";
 
 const MongoStore = mongo(session);
@@ -21,6 +21,9 @@ import {postLogin} from "@controllers/user.controller";
 
 // Create Express server
 const app = express();
+const swaggerUi = require("swagger-ui-express");
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerSpec = swaggerJSDoc(swaggerConfiguration);
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
