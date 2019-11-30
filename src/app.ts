@@ -10,17 +10,20 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "@utils/secrets";
-
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerConfiguration } from "./swagger/conf";
 import router from "./routes";
 
 const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as apiController from "@controllers/api";
-import {postLogin} from "@controllers/user.controller";
+import { postLogin } from "@controllers/user.controller";
 
 // Create Express server
 const app = express();
+const swaggerSpec = swaggerJSDoc(swaggerConfiguration);
 
 // Connect to MongoDB
 const mongoUrl = MONGODB_URI;
@@ -79,6 +82,7 @@ app.use(
  * API examples routes.
  */
 app.get(["/","/api"], apiController.getApi);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.post("/login", postLogin);
 app.use("/api/", passport.authenticate("jwt", { session: false }), router );
 
