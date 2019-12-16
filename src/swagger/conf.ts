@@ -32,5 +32,5 @@ export const swaggerConfiguration = {
             }
         ],
     },
-    apis: ['**/routes/*', '**/models/*']
+    apis: ["**/routes/*", "**/models/*"]
 };

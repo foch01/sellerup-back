@@ -1,5 +1,5 @@
 import express from "express";
-import { postUser, putUser } from "@controllers/user.controller";
+import { putUser } from "@controllers/user.controller";
 
 const userRoutes = express.Router();
 /**
@@ -51,8 +51,6 @@ const userRoutes = express.Router();
  *
  */
 
-
-userRoutes.route("/users").post(postUser);
 
 /**
  * @swagger
