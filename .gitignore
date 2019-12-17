@@ -44,5 +44,5 @@ package-lock.json
 data/
 config/cert
 # Ignore data elastic
-# elasticsearch/data/nodes/
+elasticsearch/data/nodes/
 
