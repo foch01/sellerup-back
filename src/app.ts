@@ -19,7 +19,7 @@ const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as apiController from "@controllers/api";
-import { postLogin } from "@controllers/user.controller";
+import { postLogin, postUser } from "@controllers/user.controller";
 
 // Create Express server
 const app = express();
@@ -84,6 +84,7 @@ app.use(
 app.get(["/","/api"], apiController.getApi);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.post("/login", postLogin);
+app.post("/users", postUser);
 app.use("/api/", passport.authenticate("jwt", { session: false }), router );
 
 /**
