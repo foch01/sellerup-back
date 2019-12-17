@@ -47,6 +47,15 @@ mongod
 # on macOS 10.15 or above the db directory is under home directory
 mongod --dbpath ~/data/db
 ```
+- Create folder data ElasticSearch
+```
+mkdir elasticsearch/data
+```
+- Run ElasticSearch, Kibana and Mongo with Docker: 
+```
+sudo docker-compose up -d
+```
+And go to [http://localhost:5601](http://localhost:5601)
 - Build and run the project
 ```
 npm run build

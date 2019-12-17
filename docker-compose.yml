@@ -14,25 +14,45 @@ services:
     restart: always
     container_name: mongo
     ports:
-      - "27017:27017"
-  # mongo-express:
-  #   image: "mongo-express:latest"
-  #   environment:
-  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-  #     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
-  #   ports:
-  #     - "8081:8081"
-  #   depends_on:
-  #     - "mongo"
-#   redis:
-#     image: redis:5.0.4
-#     container_name: redis
-#     command: ["redis-server", "--appendonly", "yes"]
-#     hostname: redis
-#     ports:
-#       - "6379:6379"
-#     volumes:
-#       - redis-data:/data
+    - "27017:27017"
 
-# volumes:
-#   redis-data:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    ports:
+    - 9200:9200
+    volumes:
+    - ./elasticsearch/data:/usr/share/elasticsearch/data
+    - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks: [elastic]
+    environment:
+    - discovery.type=single-node
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.0
+    ports:
+    - 5601:5601
+    networks: [elastic]
+networks:
+  elastic:
+
+      # mongo-express:
+      #   image: "mongo-express:latest"
+      #   environment:
+      #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+      #     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
+      #   ports:
+      #     - "8081:8081"
+      #   depends_on:
+      #     - "mongo"
+      #   redis:
+      #     image: redis:5.0.4
+      #     container_name: redis
+      #     command: ["redis-server", "--appendonly", "yes"]
+      #     hostname: redis
+      #     ports:
+      #       - "6379:6379"
+      #     volumes:
+      #       - redis-data:/data
+
+      # volumes:
+      #   redis-data:
+

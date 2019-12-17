@@ -17,6 +17,9 @@ import router from "./routes";
 
 const MongoStore = mongo(session);
 
+import { Client } from '@elastic/elasticsearch'
+const client = new Client({ node: process.env.ELASTIC_ADDRESS});
+
 // Controllers (route handlers)
 import * as apiController from "@controllers/api";
 import { postLogin, postUser } from "@controllers/user.controller";

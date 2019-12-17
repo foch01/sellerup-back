@@ -27,9 +27,9 @@ node_modules
 bower_components
 
 # Editors
-.idea
+#.idea
 *.iml
-
+.idea/workspace.xml
 # OS metadata
 .DS_Store
 Thumbs.db
@@ -43,4 +43,6 @@ package-lock.json
 
 data/
 config/cert
+# Ignore data elastic
+elasticsearch/data/nodes/
 
