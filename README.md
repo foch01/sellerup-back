@@ -51,6 +51,7 @@ mongod --dbpath ~/data/db
 ```
 sudo docker-compose up -d
 ```
+And go to [http://localhost:5601](http://localhost:5601)
 - Build and run the project
 ```
 npm run build
