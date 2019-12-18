@@ -1,13 +1,14 @@
-export const swaggerConfiguration = {
+import { SwaggerOptions } from "swagger-ui-express";
+
+export const swaggerConfiguration: SwaggerOptions = {
     swaggerDefinition: {
         openapi: "3.0.0",
         components: {
-            securitySchemes: {
-                JWT: {
-                    "description": "",
-                    "type": "apiKey",
-                    "name": "Authorization",
-                    "in": "header"
+            securitySchemes: { 
+                bearerAuth: {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
                 }
             }
         },
@@ -32,5 +33,5 @@ export const swaggerConfiguration = {
             }
         ],
     },
-    apis: ["**/routes/*", "**/models/*"]
+    apis: ["./src/routes/*.ts", "./src/models/*.ts", "./src/swagger/*.spec.yml"]
 };
