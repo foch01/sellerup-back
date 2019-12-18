@@ -15,6 +15,9 @@ import swaggerUi from "swagger-ui-express";
 import { swaggerConfiguration } from "./swagger/conf";
 import router from "./routes";
 
+import cors, { CorsOptions } from "cors";
+
+
 const MongoStore = mongo(session);
 
 import { Client } from '@elastic/elasticsearch'
@@ -26,6 +29,20 @@ import { postLogin, postUser } from "@controllers/user.controller";
 
 // Create Express server
 const app = express();
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS || "";
+const whitelist = allowedOrigins.split(",");
+const corsOptions: CorsOptions= {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+    methods: ["POST", "PUT", "GET", "DELETE"],
+};
+app.use(cors(corsOptions));
+
 const swaggerSpec = swaggerJSDoc(swaggerConfiguration);
 
 // Connect to MongoDB
