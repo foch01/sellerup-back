@@ -33,7 +33,7 @@ const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS || "";
 const whitelist = allowedOrigins.split(",");
 const corsOptions: CorsOptions= {
     origin: (origin, callback) => {
-        if (whitelist.indexOf(origin) !== -1) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
           callback(null, true);
         } else {
           callback(new Error("Not allowed by CORS"));
