@@ -55,8 +55,8 @@ const options: mongoose.ConnectionOptions = {
     reconnectInterval: 500, // Reconnect every 500ms
     poolSize: 10,
     bufferMaxEntries: 0,
-    useNewUrlParser: true, 
-    useCreateIndex: true, 
+    useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: true
 };
