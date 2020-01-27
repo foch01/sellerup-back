@@ -58,7 +58,7 @@ const options: mongoose.ConnectionOptions = {
     useNewUrlParser: true, 
     useCreateIndex: true, 
     useUnifiedTopology: true,
-    useFindAndModify: true,
+    useFindAndModify: true
 };
 
 mongoose.connect(mongoUrl, options).then(
