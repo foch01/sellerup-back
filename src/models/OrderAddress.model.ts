@@ -1,6 +1,6 @@
-import { model, Model, Schema, Document, SchemaTypes } from "mongoose";
-import { ZipCodeModelType } from "@models/ZipCode.model";
-import { CityModelType } from "@models/City.model";
+import { model, Model, Schema, Document, SchemaTypes } from 'mongoose';
+import { ZipCodeModelType } from '@models/ZipCode.model';
+import { CityModelType } from '@models/City.model';
 
 export type OrderAddressModelType = Document & {
     name: string;
@@ -15,17 +15,20 @@ export type OrderAddressModelType = Document & {
     countryCode: string;
 };
 
-const OrderAddressModelSchema = new Schema({
-    name: String,
-    addressLine1: String,
-    addressLine2: String,
-    addressLine3: String,
-    city: {type: SchemaTypes.ObjectId, ref: "CityModel"},
-    county: String,
-    district: String,
-    stateOrRegion: String,
-    zipCode: {type: SchemaTypes.ObjectId, ref: "ZipCodeModel"},
-    countryCode: String,
-}, { timestamps: true });
+const OrderAddressModelSchema = new Schema(
+    {
+        name: String,
+        addressLine1: String,
+        addressLine2: String,
+        addressLine3: String,
+        city: { type: SchemaTypes.ObjectId, ref: 'CityModel' },
+        county: String,
+        district: String,
+        stateOrRegion: String,
+        zipCode: { type: SchemaTypes.ObjectId, ref: 'ZipCodeModel' },
+        countryCode: String,
+    },
+    { timestamps: true },
+);
 
-export const OrderAddressModelDb: Model<OrderAddressModelType> = model("OrderAddressModel", OrderAddressModelSchema);
+export const OrderAddressModelDb: Model<OrderAddressModelType> = model('OrderAddressModel', OrderAddressModelSchema);

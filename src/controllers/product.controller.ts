@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import asyncHandler from "@utils/asyncHandler";
-import { ProductModelDb } from "@models/Product.model";
+import { Request, Response } from 'express';
+import asyncHandler from '@utils/asyncHandler';
+import { ProductModelDb } from '@models/Product.model';
 
 export const getAllProduct = asyncHandler(async (req: Request, res: Response) => {
     res.json(await ProductModelDb.find());
