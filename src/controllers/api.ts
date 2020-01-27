@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
-import { Response, Request} from "express";
-
+import { Response, Request } from 'express';
 
 /**
  * GET /api

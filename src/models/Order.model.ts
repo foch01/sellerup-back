@@ -1,5 +1,5 @@
-import { model, Model, Schema, Document, SchemaTypes } from "mongoose";
-import { OrderAddressModelType } from "@models/OrderAddress.model";
+import { model, Model, Schema, Document, SchemaTypes } from 'mongoose';
+import { OrderAddressModelType } from '@models/OrderAddress.model';
 
 export type OrderModelType = Document & {
     amazonOrderId: string;
@@ -27,30 +27,33 @@ export type OrderModelType = Document & {
     isPremiumOrder: boolean;
 };
 
-const OrderModelSchema = new Schema({
-    amazonOrderId: { type: String, unique: true },
-    sellerOrderId: String,
-    purchaseDate: Date,
-    lastUpdateDate: Date,
-    orderStatus: String,
-    fulfillmentChannel: String,
-    salesChannel: String,
-    orderChannel: String,
-    shipServiceLevel: String,
-    shippingAddress: {type: SchemaTypes.ObjectId, ref: "OrderAddressModel"},
-    orderTotal: String,
-    numberOfItemsShipped: Number,
-    numberOfItemsUnshipped: Number,
-    isReplacementOrder: Boolean,
-    replacedOrderId: String,
-    marketplaceId: String,
-    buyerEmail: String,
-    buyerName: String,
-    shipmentServiceLevelCategory: String,
-    isBusinessOrder: Boolean,
-    purchaseOrderNumber: String,
-    isPrime: Boolean,
-    isPremiumOrder: Boolean,
-}, { timestamps: true });
+const OrderModelSchema = new Schema(
+    {
+        amazonOrderId: { type: String, unique: true },
+        sellerOrderId: String,
+        purchaseDate: Date,
+        lastUpdateDate: Date,
+        orderStatus: String,
+        fulfillmentChannel: String,
+        salesChannel: String,
+        orderChannel: String,
+        shipServiceLevel: String,
+        shippingAddress: { type: SchemaTypes.ObjectId, ref: 'OrderAddressModel' },
+        orderTotal: String,
+        numberOfItemsShipped: Number,
+        numberOfItemsUnshipped: Number,
+        isReplacementOrder: Boolean,
+        replacedOrderId: String,
+        marketplaceId: String,
+        buyerEmail: String,
+        buyerName: String,
+        shipmentServiceLevelCategory: String,
+        isBusinessOrder: Boolean,
+        purchaseOrderNumber: String,
+        isPrime: Boolean,
+        isPremiumOrder: Boolean,
+    },
+    { timestamps: true },
+);
 
-export const OrderModelDb: Model<OrderModelType> = model("OrderModel", OrderModelSchema);
+export const OrderModelDb: Model<OrderModelType> = model('OrderModel', OrderModelSchema);

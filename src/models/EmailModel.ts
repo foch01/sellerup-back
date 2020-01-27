@@ -1,5 +1,5 @@
-import { model, Model, Schema, SchemaTypes, Document } from "mongoose";
-import { EmailGroupModelType } from "@models/EmailGroupModel";
+import { model, Model, Schema, SchemaTypes, Document } from 'mongoose';
+import { EmailGroupModelType } from '@models/EmailGroupModel';
 
 export type EmailModelType = Document & {
     title: string;
@@ -15,7 +15,8 @@ export type EmailModelType = Document & {
     emailGroup: EmailGroupModelType[];
 };
 
-export const EmailModelSchema = new Schema({
+export const EmailModelSchema = new Schema(
+    {
         title: String,
         subject: String,
         content: String,
@@ -26,12 +27,12 @@ export const EmailModelSchema = new Schema({
         negativeReview: String,
         sendAllProductAllTheShop: Boolean,
         listMultipleProductASIN: [String],
-        emailGroup: [{type: SchemaTypes.ObjectId, ref: "EmailGroupModel"}]
+        emailGroup: [{ type: SchemaTypes.ObjectId, ref: 'EmailGroupModel' }],
     },
     {
         timestamps: true,
-        usePushEach: true
-    });
+        usePushEach: true,
+    },
+);
 
-export const EmailModelDb: Model<EmailModelType> = model("EmailModel", EmailModelSchema);
-
+export const EmailModelDb: Model<EmailModelType> = model('EmailModel', EmailModelSchema);

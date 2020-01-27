@@ -1,9 +1,9 @@
-import express from "express";
-import orderRoutes from "@routes/order.routes";
-import productRoutes from "@routes/product.routes";
-import companyRoutes from "@routes/company.routes";
-import userRoutes from "@routes/user.routes";
-import shopRoutes from "@routes/shop.routes";
+import express from 'express';
+import orderRoutes from '@routes/order.routes';
+import productRoutes from '@routes/product.routes';
+import companyRoutes from '@routes/company.routes';
+import userRoutes from '@routes/user.routes';
+import shopRoutes from '@routes/shop.routes';
 
 const router = express.Router();
 

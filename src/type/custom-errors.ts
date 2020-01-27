@@ -3,10 +3,10 @@ export class BadCredentialsError extends Error {
     message: string;
     level: string;
     constructor() {
-        const message = "Bad credentials";
+        const message = 'Bad credentials';
         super(message);
         this.status = 400;
-        this.level = "info";
+        this.level = 'info';
         this.message = message;
     }
-  }
+}

@@ -1,13 +1,13 @@
-import { NextFunction, Request, Response } from "express";
-import { ShopModelDb, ShopModelType } from "@models/Shop.model";
-import asyncHandler from "@utils/asyncHandler";
+import { NextFunction, Request, Response } from 'express';
+import { ShopModelDb, ShopModelType } from '@models/Shop.model';
+import asyncHandler from '@utils/asyncHandler';
 
 /**
  *
  * @param req
  * @param res
  */
-export const createShop = asyncHandler( async(req: Request, res: Response, next: NextFunction) => {
+export const createShop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const shop: ShopModelType = req.body;
     res.json(await ShopModelDb.create(shop));
 });
@@ -17,7 +17,7 @@ export const createShop = asyncHandler( async(req: Request, res: Response, next:
  * @param req
  * @param res
  */
-export const getAllShop = asyncHandler( async(req: Request, res: Response, next: NextFunction) => {
+export const getAllShop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     res.json(await ShopModelDb.find());
 });
 
@@ -26,7 +26,7 @@ export const getAllShop = asyncHandler( async(req: Request, res: Response, next:
  * @param req
  * @param res
  */
-export const getShop = asyncHandler( async(req: Request, res: Response, next: NextFunction) => {
+export const getShop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     res.json(await ShopModelDb.findById({ _id: req.params.shopId }));
 });
 
@@ -35,7 +35,7 @@ export const getShop = asyncHandler( async(req: Request, res: Response, next: Ne
  * @param req
  * @param res
  */
-export const updateShop = asyncHandler( async(req: Request, res: Response, next: NextFunction) => {
+export const updateShop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     res.json(await ShopModelDb.findOneAndUpdate({ _id: req.params.shopId }, req.body, { new: true }));
 });
 
@@ -44,6 +44,6 @@ export const updateShop = asyncHandler( async(req: Request, res: Response, next:
  * @param req
  * @param res
  */
-export const deleteShop = asyncHandler( async(req: Request, res: Response, next: NextFunction) => {
+export const deleteShop = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     res.json(await ShopModelDb.deleteOne({ _id: req.params.shopId }));
 });

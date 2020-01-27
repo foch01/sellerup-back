@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from "mongoose";
+import { model, Model, Schema, Document } from 'mongoose';
 
 export type ShopModelType = Document & {
     name: string;
@@ -9,7 +9,7 @@ export type ShopModelType = Document & {
 const ShopModelSchema = new Schema({
     name: String,
     sellerId: String,
-    secretKey: String
+    secretKey: String,
 });
 
-export const ShopModelDb: Model<ShopModelType> = model("ShopModel", ShopModelSchema);
+export const ShopModelDb: Model<ShopModelType> = model('ShopModel', ShopModelSchema);

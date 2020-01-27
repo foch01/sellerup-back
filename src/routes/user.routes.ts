@@ -1,5 +1,5 @@
-import express from "express";
-import { putUser } from "@controllers/user.controller";
+import express from 'express';
+import { putUser } from '@controllers/user.controller';
 
 const userRoutes = express.Router();
 /**
@@ -56,6 +56,6 @@ const userRoutes = express.Router();
  *         description: User update success
  */
 
-userRoutes.route("/users/:userId").put(putUser);
+userRoutes.route('/users/:userId').put(putUser);
 
 export default userRoutes;

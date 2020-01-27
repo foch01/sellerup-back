@@ -1,9 +1,9 @@
-import { createLogger, transports } from "winston";
-import { ENVIRONMENT } from "./secrets";
+import { createLogger, transports } from 'winston';
+import { ENVIRONMENT } from './secrets';
 
 const options = {
     file: {
-        level: "info",
+        level: 'info',
         handleExceptions: true,
         json: true,
         maxsize: 5242880, // 5MB
@@ -11,7 +11,7 @@ const options = {
         colorize: false,
     },
     console: {
-        level: "debug",
+        level: 'debug',
         handleExceptions: true,
         json: true,
         colorize: true,
@@ -20,15 +20,14 @@ const options = {
 
 const logger = createLogger({
     transports: [
-        new (transports.Console)(options.file),
+        new transports.Console(options.file),
         // new (winston.transports.Console)({ level: process.env.NODE_ENV === "production" ? "error" : "debug" }),
-        new (transports.File)({ filename: "debug.log", level: "debug"})
-    ]
+        new transports.File({ filename: 'debug.log', level: 'debug' }),
+    ],
 });
 
-if (process.env.NODE_ENV !== "production") {
-    logger.log({level: "info", message:"Logging initialized at debug level"});
+if (process.env.NODE_ENV !== 'production') {
+    logger.log({ level: 'info', message: 'Logging initialized at debug level' });
 }
 
 export default logger;
-

@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from "mongoose";
+import { model, Model, Schema, Document } from 'mongoose';
 
 export type CompanyModelType = Document & {
     name: string;
@@ -9,7 +9,7 @@ export type CompanyModelType = Document & {
 const CompanyModelSchema = new Schema({
     name: String,
     siretNumber: String,
-    sirenNumber: String
+    sirenNumber: String,
 });
 
-export const CompanyModelDb: Model<CompanyModelType> = model("CompanyModel", CompanyModelSchema);
+export const CompanyModelDb: Model<CompanyModelType> = model('CompanyModel', CompanyModelSchema);
