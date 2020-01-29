@@ -1,0 +1,56 @@
+image: node:10.15.3
+
+stages:
+  - build
+  - send and deploy staging
+  - send and deploy production
+
+cache:
+  paths:
+    - node
+
+Build, test and install dependency:
+  stage: build
+  script:
+    - npm install
+    - npm run lint
+    - npm run build
+    - npm run build:targz ${CI_PIPELINE_IID}
+  artifacts:
+    paths:
+      - dist/**
+      - views/**
+      - node_modules/**
+      - build/**
+
+Deploy to staging:
+  stage: send and deploy staging
+  when: manual
+  before_script:
+      # Connexion SSH
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval `ssh-agent -s`
+    - ssh-add <(echo "$SSH_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - npm run send ${CI_PIPELINE_IID} ${IP_SERVER_STAGING_DEPLOY}
+    - npm run deploy ${CI_PIPELINE_IID} ${IP_SERVER_STAGING_DEPLOY}
+  environment:
+    name: staging
+
+Deploy to production:
+  stage: send and deploy production
+  when: manual
+  before_script:
+    # Connexion SSH
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval `ssh-agent -s`
+    - ssh-add <(echo "$SSH_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - npm run send ${CI_PIPELINE_IID} ${IP_SERVER_PROD_DEPLOY}
+    - npm run deploy ${CI_PIPELINE_IID} ${IP_SERVER_PROD_DEPLOY}
+  environment:
+    name: production
