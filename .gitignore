@@ -39,8 +39,6 @@ dist/*
 
 debug.log
 
-package-lock.json
-
 data/
 config/cert
 # Ignore data elastic
