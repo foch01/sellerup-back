@@ -2,6 +2,7 @@ import Logger from './logger';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { SmtpOptions } from 'nodemailer-smtp-transport';
+import { RedisOptions } from 'ioredis';
 
 const { env } = process;
 
@@ -46,4 +47,11 @@ if (IS_PROD) {
     };
 }
 
-export { ENVIRONMENT, MONGODB_URI, SESSION_SECRET, IS_PROD, TRANSPORTER_OPTIONS };
+const REDIS_OPTIONS: RedisOptions = {
+    port: Number(env.REDIS_PORT),
+    host: env.REDIS_HOST,
+};
+
+const EMAIL_RECEIVE_TEST = env.EMAIL_RECEIVE_TEST;
+
+export { ENVIRONMENT, MONGODB_URI, SESSION_SECRET, IS_PROD, TRANSPORTER_OPTIONS, REDIS_OPTIONS, EMAIL_RECEIVE_TEST };

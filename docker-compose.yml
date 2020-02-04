@@ -1,58 +1,52 @@
 version: "3.1"
 services:
-  #  api:
-  #    restart: "always"
-  #    container_name: api
-  #    build: .
-  #    ports:
-  #      - "3000:3000"
-  #    depends_on:
-  #      - "mongo"
-  #      - "redis"
-  mongo:
-    image: mongo:4.0.7-xenial
-    restart: always
-    container_name: mongo
-    ports:
-    - "27017:27017"
+    #  api:
+    #    restart: "always"
+    #    container_name: api
+    #    build: .
+    #    ports:
+    #      - "3000:3000"
+    #    depends_on:
+    #      - "mongo"
+    #      - "redis"
+    mongo:
+        image: mongo:4.0.7-xenial
+        restart: always
+        container_name: mongo
+        ports:
+            - "27017:27017"
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-    ports:
-    - 9200:9200
-    volumes:
-    - ./elasticsearch/data:/usr/share/elasticsearch/data
-    - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    networks: [elastic]
-    environment:
-    - discovery.type=single-node
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.5.0
-    ports:
-    - 5601:5601
-    networks: [elastic]
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+        ports:
+            - 9200:9200
+        volumes:
+            - ./elasticsearch/data:/usr/share/elasticsearch/data
+            - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+        networks: [elastic]
+        environment:
+            - discovery.type=single-node
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.5.0
+        ports:
+            - 5601:5601
+        networks: [elastic]
+    redis:
+        image: redis:5.0.7-alpine
+        command: ["redis-server", "--appendonly", "yes"]
+        hostname: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./data/redis:/data
 networks:
-  elastic:
-
-      # mongo-express:
-      #   image: "mongo-express:latest"
-      #   environment:
-      #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-      #     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
-      #   ports:
-      #     - "8081:8081"
-      #   depends_on:
-      #     - "mongo"
-      #   redis:
-      #     image: redis:5.0.4
-      #     container_name: redis
-      #     command: ["redis-server", "--appendonly", "yes"]
-      #     hostname: redis
-      #     ports:
-      #       - "6379:6379"
-      #     volumes:
-      #       - redis-data:/data
-
-      # volumes:
-      #   redis-data:
-
+    elastic:
+        # mongo-express:
+        #   image: "mongo-express:latest"
+        #   environment:
+        #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+        #     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
+        #   ports:
+        #     - "8081:8081"
+        #   depends_on:
+        #     - "mongo"
