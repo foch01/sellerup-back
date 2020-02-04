@@ -13,6 +13,7 @@ import { MONGODB_URI, SESSION_SECRET } from '@utils/secrets';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerConfiguration } from './swagger/conf';
+import RedisEmailService from '@services/Redis.email.service';
 import router from './routes';
 
 import cors, { CorsOptions } from 'cors';
@@ -107,6 +108,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.post('/login', postLogin);
 app.post('/users', postUser);
 app.use('/api/', passport.authenticate('jwt', { session: false }), router);
+
+RedisEmailService.initialize();
 
 /**
  * Attach error handler
