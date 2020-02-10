@@ -13,7 +13,7 @@ if (fs.existsSync('.env')) {
     Logger.debug('Using .env.example file to supply config environment variables');
     dotenv.config({ path: '.env.example' }); // you can delete this after you create your own .env file!
 }
-const ENVIRONMENT = env.NODE_ENV;
+const ENVIRONMENT = env.ENVIRONNEMENT;
 const IS_PROD = ENVIRONMENT === 'production'; // Anything else is treated as 'dev'
 
 const SESSION_SECRET = env['SESSION_SECRET'];
@@ -56,8 +56,7 @@ const EMAIL_RECEIVE_TEST = env.EMAIL_RECEIVE_TEST;
 const HOST = env.HOST || 'http://localhost:3000';
 
 const SWAGGER_API_PATHS: string[] = [];
-
-if (ENVIRONMENT !== 'development') {
+if (ENVIRONMENT !== 'DEVLOCAL') {
     SWAGGER_API_PATHS.push('./swagger/*.spec.yml');
 } else {
     SWAGGER_API_PATHS.push('./src/swagger/*.spec.yml');
