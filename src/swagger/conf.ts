@@ -1,5 +1,7 @@
 import { SwaggerOptions } from 'swagger-ui-express';
 
+import { HOST } from '@utils/secrets';
+
 export const swaggerConfiguration: SwaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -28,9 +30,9 @@ export const swaggerConfiguration: SwaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/api/',
+                url: `${HOST}api/`,
             },
         ],
     },
-    apis: ['./src/routes/*.ts', './src/models/*.ts', './src/swagger/*.spec.yml'],
+    apis: ['./src/swagger/*.spec.yml'],
 };
