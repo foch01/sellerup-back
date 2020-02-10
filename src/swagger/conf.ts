@@ -1,6 +1,6 @@
 import { SwaggerOptions } from 'swagger-ui-express';
-
 import { HOST } from '@utils/secrets';
+import { usersPaths, usersSchemas } from './users.spec';
 
 export const swaggerConfiguration: SwaggerOptions = {
     swaggerDefinition: {
@@ -12,6 +12,9 @@ export const swaggerConfiguration: SwaggerOptions = {
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
                 },
+            },
+            schemas: {
+                ...usersSchemas,
             },
         },
         info: {
@@ -33,6 +36,9 @@ export const swaggerConfiguration: SwaggerOptions = {
                 url: `${HOST}api/`,
             },
         ],
+        paths: {
+            ...usersPaths,
+        },
     },
     apis: ['./src/swagger/*.spec.yml'],
 };
