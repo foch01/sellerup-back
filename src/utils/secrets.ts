@@ -57,7 +57,7 @@ const HOST = env.HOST || 'http://localhost:3000';
 
 const SWAGGER_API_PATHS: string[] = [];
 if (ENVIRONMENT !== 'DEVLOCAL') {
-    SWAGGER_API_PATHS.push('./swagger/*.spec.yml');
+    SWAGGER_API_PATHS.push('./dist/swagger/*.spec.yml');
 } else {
     SWAGGER_API_PATHS.push('./src/swagger/*.spec.yml');
 }
