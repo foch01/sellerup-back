@@ -1,103 +1,111 @@
 components:
-  schemas:
-    Company:
-      type: object
-      properties:
-        name:
-          type: string
-        siretNumber:
-          type: string
-        sirenNumber:
-          type: string 
+    schemas:
+        Company:
+            type: object
+            properties:
+                name:
+                    type: string
+                siretNumber:
+                    type: string
+                sirenNumber:
+                    type: string
 
 /companies:
-  post:
-    servers:
-      - url: http://localhost:3000/
-    description: Create Company
-    tags: [Company]
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Company"
-    responses:
-      200:
-        description: A Company object
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Company"
-  get:
-    description: Get all the companies
-    tags: [Company]
-    produces:
-      - application/json
-    responses:
-      200:
-        description: successful operation
-        content:
-          application/json:
-            schema:
-              type: array
-              $ref: "#/components/schemas/Company"
-            example:
-              - name: string
-                siretNumber: "string"
-                sirenNumber: "string"
-              - name: string
-                siretNumber: "string"
-                sirenNumber: "string"                   
+    post:
+        security:
+            - bearearAuth: []
+        description: Create Company
+        tags: [Company]
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Company'
+        responses:
+            200:
+                description: A Company object
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Company'
+    get:
+        security:
+            - bearearAuth: []
+        description: Get all the companies
+        tags: [Company]
+        produces:
+            - application/json
+        responses:
+            200:
+                description: successful operation
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            $ref: '#/components/schemas/Company'
+                        example:
+                            - name: string
+                              siretNumber: 'string'
+                              sirenNumber: 'string'
+                            - name: string
+                              siretNumber: 'string'
+                              sirenNumber: 'string'
 /companies/{companyId}:
-  get:
-    description: Get a company by ID
-    tags: [Company]
-    produces:
-      - application/json
-    parameters: 
-    - name: companyId
-      in: path
-      description: ID of the company
-      required: true
-      type: string
-    responses:
-      200:
-        description: A company object
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Company"
-  put:
-    description: Update a company by ID
-    tags: [Company]
-    produces:
-      - application/json
-    parameters: 
-    - name: companyId
-      in: path
-      description: ID of the company
-      required: true
-      type: string
-    - name: body
-      in: body
-      required: true
-      schema:
-        $ref: '#/components/schemas/Company' 
-    responses:
-      200:
-        description: Company updated successfuly
-  delete:
-    description: Delete a company by ID
-    tags: [Company]
-    produces:
-      - application/json
-    parameters: 
-    - name: companyId
-      in: path
-      description: ID of the company
-      required: true
-      type: string
-    responses:
-      200:
-        description: Company deleted successfuly            
+    get:
+        security:
+            - bearearAuth: []
+        description: Get a company by ID
+        tags: [Company]
+        produces:
+            - application/json
+        parameters:
+            - name: companyId
+              in: path
+              description: ID of the company
+              required: true
+              type: string
+        responses:
+            200:
+                description: A company object
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Company'
+    put:
+        security:
+            - bearearAuth: []
+        description: Update a company by ID
+        tags: [Company]
+        produces:
+            - application/json
+        parameters:
+            - name: companyId
+              in: path
+              description: ID of the company
+              required: true
+              type: string
+            - name: body
+              in: body
+              required: true
+              schema:
+                  $ref: '#/components/schemas/Company'
+        responses:
+            200:
+                description: Company updated successfuly
+    delete:
+        security:
+            - bearearAuth: []
+        description: Delete a company by ID
+        tags: [Company]
+        produces:
+            - application/json
+        parameters:
+            - name: companyId
+              in: path
+              description: ID of the company
+              required: true
+              type: string
+        responses:
+            200:
+                description: Company deleted successfuly
