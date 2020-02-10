@@ -55,6 +55,14 @@ const REDIS_OPTIONS: RedisOptions = {
 const EMAIL_RECEIVE_TEST = env.EMAIL_RECEIVE_TEST;
 const HOST = env.HOST || 'http://localhost:3000';
 
+const SWAGGER_API_PATHS: string[] = [];
+
+if (ENVIRONMENT !== 'development') {
+    SWAGGER_API_PATHS.push('./swagger/*.spec.yml');
+} else {
+    SWAGGER_API_PATHS.push('./src/swagger/*.spec.yml');
+}
+
 export {
     ENVIRONMENT,
     MONGODB_URI,
@@ -64,4 +72,5 @@ export {
     REDIS_OPTIONS,
     EMAIL_RECEIVE_TEST,
     HOST,
+    SWAGGER_API_PATHS,
 };

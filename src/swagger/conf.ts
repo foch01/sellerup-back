@@ -1,5 +1,5 @@
 import { SwaggerOptions } from 'swagger-ui-express';
-import { HOST } from '@utils/secrets';
+import { HOST, SWAGGER_API_PATHS } from '@utils/secrets';
 import { usersPaths, usersSchemas } from './users.spec';
 
 export const swaggerConfiguration: SwaggerOptions = {
@@ -40,5 +40,5 @@ export const swaggerConfiguration: SwaggerOptions = {
             ...usersPaths,
         },
     },
-    apis: ['./src/swagger/*.spec.yml'],
+    apis: SWAGGER_API_PATHS,
 };
