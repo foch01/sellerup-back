@@ -1,52 +1,63 @@
-version: "3.1"
+version: '3.2'
 services:
-    #  api:
-    #    restart: "always"
-    #    container_name: api
-    #    build: .
-    #    ports:
-    #      - "3000:3000"
-    #    depends_on:
-    #      - "mongo"
-    #      - "redis"
     mongo:
         image: mongo:4.0.7-xenial
         restart: always
-        container_name: mongo
         ports:
-            - "27017:27017"
+            - '27017:27017'
 
     elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-        ports:
-            - 9200:9200
+        image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
         volumes:
-            - ./elasticsearch/data:/usr/share/elasticsearch/data
-            - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-        networks: [elastic]
-        environment:
-            - discovery.type=single-node
-    kibana:
-        image: docker.elastic.co/kibana/kibana:7.5.0
+            - type: bind
+              source: ./config/elasticsearch.yml
+              target: /usr/share/elasticsearch/config/elasticsearch.yml
+              read_only: true
+            - type: bind
+              source: ./data/elasticsearch
+              target: /usr/share/elasticsearch/data
         ports:
-            - 5601:5601
-        networks: [elastic]
+            - '9200:9200'
+            - '9300:9300'
+        environment:
+            ES_JAVA_OPTS: '-Xmx512m -Xms512m'
+            ELASTIC_PASSWORD: 'l#81nH:5JAh*5xAgMg@p8JiyO!0z&a'
+            # Use single node discovery in order to disable production mode and avoid bootstrap checks
+            # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+            discovery.type: single-node
+        networks:
+            - elk
+    kibana:
+        image: docker.elastic.co/kibana/kibana:$ELK_VERSION
+        volumes:
+            - type: bind
+              source: ./config/kibana.yml
+              target: /usr/share/kibana/config/kibana.yml
+              read_only: true
+        ports:
+            - '5601:5601'
+        networks:
+            - elk
+        depends_on:
+            - elasticsearch
+
     redis:
         image: redis:5.0.7-alpine
-        command: ["redis-server", "--appendonly", "yes"]
+        command: ['redis-server', '--appendonly', 'yes']
         hostname: redis
         ports:
-            - "6379:6379"
+            - '6379:6379'
         volumes:
             - ./data/redis:/data
 networks:
-    elastic:
-        # mongo-express:
-        #   image: "mongo-express:latest"
-        #   environment:
-        #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-        #     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
-        #   ports:
-        #     - "8081:8081"
-        #   depends_on:
-        #     - "mongo"
+    elk:
+        driver: bridge
+# mongo-express:
+#   image: "mongo-express:latest"
+#   environment:
+#     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+#     ME_CONFIG_OPTIONS_EDITORTHEME: "darcula"
+#   ports:
+#     - "8081:8081"
+#   depends_on:
+#     - "mongo"
