@@ -4,6 +4,7 @@ import productRoutes from '@routes/product.routes';
 import companyRoutes from '@routes/company.routes';
 import userRoutes from '@routes/user.routes';
 import shopRoutes from '@routes/shop.routes';
+import pingRoutes from '@routes/ping.routes';
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use(productRoutes);
 router.use(companyRoutes);
 router.use(userRoutes);
 router.use(shopRoutes);
+router.use(pingRoutes);
 
 export default router;
