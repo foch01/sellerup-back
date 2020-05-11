@@ -29,19 +29,19 @@ import { postLogin, postUser } from '@controllers/user.controller';
 
 // Create Express server
 const app = express();
-const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS || '';
-const whitelist = allowedOrigins.split(',');
-const corsOptions: CorsOptions = {
-    origin: (origin, callback) => {
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['POST', 'PUT', 'GET', 'DELETE'],
-};
-app.use(cors(corsOptions));
+// const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS || '';
+// const whitelist = allowedOrigins.split(',');
+// const corsOptions: CorsOptions = {
+//     origin: (origin, callback) => {
+//         if (whitelist.indexOf(origin) !== -1 || !origin) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: ['POST', 'PUT', 'GET', 'DELETE'],
+// };
+app.use(cors());
 
 const swaggerSpec = swaggerJSDoc(swaggerConfiguration);
 
